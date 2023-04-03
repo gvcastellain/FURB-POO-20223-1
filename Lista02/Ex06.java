@@ -1,10 +1,18 @@
 public class VetorDeReais {
    
-    double[] vetor;
+    private double[] vetor;
 
     public VetorDeReais(int tamanho) {
         this.vetor = new double[tamanho];
     }
+
+    public int getTamanho() {
+		return this.vetor.length;
+	}
+
+    public double getValor(int posicao) {
+		return this.vetor[posicao];
+	}
 
     public int pares() {
 
@@ -19,15 +27,37 @@ public class VetorDeReais {
         return quantidade;
     }
 
+    public double[] novo() {
+        double[] vetorNovo = new double[this.vetor.length];
+
+        for (int i = 0; i < vetor.length; i++) {
+            vetor[i] = vetor[i] / vetor[i]; 
+        }
+
+        return vetor;
+    }
+
+    public void inverte() {
+		double[] vetorInverso = new double[this.vetor.length];
+
+
+        for (int i = 0; i < vetor.length; i++) {
+            vetorInverso[vetor.length - i - 1] = this.vetor[i];
+        }
+
+        
+        this.vetor = vetorInverso;
+    }
    
    
     public static void main(String[] args) {
         
-        double[] c = new double[3];
-        c[0] = 1.5;
-        c[1] = 2.5;
-        c[2] = 3.5;
+        VetorDeReais c = new VetorDeReais(3);
+        c.vetor[0] = 1;
+        c.vetor[1] = 2;
+        c.vetor[2] = 4;
 
+        c.inverte();
         
     }
 }
