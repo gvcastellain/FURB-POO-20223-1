@@ -1,63 +1,76 @@
 public class VetorDeReais {
-   
-    private double[] vetor;
 
-    public VetorDeReais(int tamanho) {
-        this.vetor = new double[tamanho];
-    }
+	private double[] vetor;
 
-    public int getTamanho() {
+	public VetorDeReais(int tamanho) {
+		this.vetor = new double[tamanho];
+	}
+
+	// item a)
+	public void setValor(double valor, int posicao) {
+		this.vetor[posicao] = valor;
+	}
+
+	// item b)
+	public int quantosPares() {
+		int conta = 0;
+		for (int i = 0; i < vetor.length; i++) {
+			int v = (int) vetor[i];
+			if (v % 2 == 0) {
+				conta++;
+			}
+		}
+		return conta;
+	}
+
+	// item c)
+	public int getTamanho() {
 		return this.vetor.length;
 	}
 
-    public double getValor(int posicao) {
+	public double getValor(int posicao) {
 		return this.vetor[posicao];
 	}
 
-    public int pares() {
+	public VetorDeReais divisao(VetorDeReais b) {
+		if (this.getTamanho() != b.getTamanho()) {
+			return null;
+		}
+		VetorDeReais novo = new VetorDeReais(this.getTamanho());
 
-        int quantidade = 0;
+		for (int i = 0; i < this.getTamanho(); i++) {
+			double valor = this.getValor(i) / b.getValor(i);
+			novo.setValor(valor, i);
+		}
+		return novo;
+	}
 
-        for (int i = 0; i < vetor.length; i++) {
-           if ( (int) vetor[i] % 2 == 0) {
-                    quantidade++;
-           } 
+	public double multiplicacao(VetorDeReais outro) {
+		double m = 0;
+
+		for (int i = 0, j = outro.getTamanho() - 1; i < this.getTamanho(); i++, j--) {
+			m = m + this.getValor(i) * outro.getValor(j);
+		}
+		return m;
+	}
+
+	public void inversao() { // Contribuição do Lucas
+		double auxiliar = 0;
+		for (int I = 0, posDec = this.getTamanho() - 1; I < posDec; I++, posDec--) {
+			auxiliar = this.vetor[I];
+			this.vetor[I] = this.vetor[posDec];
+			this.vetor[posDec] = auxiliar;
+		}
+	}
+	
+	public double maiorDiferencaEntreConsecutivos() {
+        double diferenca;
+        double maiorDiferenca = 0;
+        for (int i = 0; i < this.vetor.length - 1; i++) {
+            diferenca = Math.abs(this.vetor[i] - this.vetor[i + 1]);
+            if (diferenca > maiorDiferenca)
+                maiorDiferenca = diferenca;
         }
-
-        return quantidade;
-    }
-
-    public double[] novo() {
-        double[] vetorNovo = new double[this.vetor.length];
-
-        for (int i = 0; i < vetor.length; i++) {
-            vetor[i] = vetor[i] / vetor[i]; 
-        }
-
-        return vetor;
-    }
-
-    public void inverte() {
-		double[] vetorInverso = new double[this.vetor.length];
-
-
-        for (int i = 0; i < vetor.length; i++) {
-            vetorInverso[vetor.length - i - 1] = this.vetor[i];
-        }
-
-        
-        this.vetor = vetorInverso;
-    }
-   
-   
-    public static void main(String[] args) {
-        
-        VetorDeReais c = new VetorDeReais(3);
-        c.vetor[0] = 1;
-        c.vetor[1] = 2;
-        c.vetor[2] = 4;
-
-        c.inverte();
-        
+        return maiorDiferenca;
     }
 }
