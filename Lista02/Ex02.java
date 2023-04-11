@@ -1,32 +1,48 @@
-public class Palavra {
-    
-    String frase;
+public class Frase {
+	
+	private String frase;
+	
+	public Frase(String frase) {
+		this.frase = frase;
+	}
 
-    public void frase (String texto) {
-        this.setFrase(texto);
-    }
+	
+	public String[] getPalavras() {
+		//lógica para separar strings
+		String palavra = "";
+		
+		int qtd = 1;
+		for (int i = 0; i < this.frase.length(); i++) {
+			if (this.frase.charAt(i) == ' ') {
+				qtd++;
+			}
+		}
+		
+		String[] palavras = new String[qtd];
+		int qtdPalavras = 0;
+		
+		for (int i = 0; i < this.frase.length(); i++) {
+			char letra = this.frase.charAt(i);
+			
+			if (letra == ' ') {
+				if (!"".equals(palavra)) {
+					palavras[qtdPalavras] = palavra;
+					palavra = "";
+					qtdPalavras++;
+				}
+			} else {
+				palavra += letra;
+			}
+		}
 
-    public String[] separar() {
-        String retorno[];
-        retorno = this.frase.split(" ");
-        return retorno;
-    }
-
-  
-    public String getFrase() {
-        return this.frase;
-    }
-    
-    public void setFrase(String frase) {
-        this.frase = frase;
-    }
-    
-    
-    public static void main(String[] args) {
-     
-        Palavra palavra = new Palavra();    
-
-        palavra.setFrase("isso é um teste");
-        System.out.println(palavra.separar());
-    }
+		if (!"".equals(palavra)) {
+			palavras[qtdPalavras] = palavra;
+		}
+		
+		return palavras;
+	}
+	
+	public String[] getPalavrasSimples() {
+		return this.frase.split(" ");
+	}
 }
